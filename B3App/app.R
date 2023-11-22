@@ -1,8 +1,7 @@
 library(shiny)
 library(dplyr)
-library(stringr)
-library(shinythemes)
-whales <- read.csv("Whale catch (Rocha et al.; IWC).csv", stringsAsFactors =  FALSE)
+library(DT)
+whales <- read.csv("Whale catch (Rocha et al.; IWC).csv", stringsAsFactors =  FALSE) #store data as whales variable
 whales <- whales %>% relocate("Bowhead.whale..Rocha.et.al...IWC.", .after = "Right.whale..Rocha.et.al...IWC.") #reorganize data so that whale species columns are together
 columnnames <- c("Entity", "Year", "Blue whale",	"Fin whale",	"Sperm whale",	"Humpback whale",	
                 "Sei whale",	"Bryde's whale", "Minke whale", "Gray whale",	"Right whale", 
@@ -16,7 +15,7 @@ ui <- fluidPage(
   sidebarLayout(
     sidebarPanel(
       sliderInput("yearInput", "Year", 1900, 2018, c(1900, 2018), sep = ""), #Feature 1: create slider to filter displayed data by year. This is useful to be able to narrow down years of interest for viewing, rather than viewing such a large range of years.
-      checkboxGroupInput("speciesInput", "Species", #Feature 2: create checkboxes to allow multiple selection to search multiple whale species simultaneously. This is useful to selectively choose whale species of interest to display, rather than viewing all species.
+      checkboxGroupInput("speciesInput", "Species", #Feature 2: create checkboxes to allow multiple selection to search multiple whale species simultaneously. This is useful to selectively choose whale species of interest to display, rather than always viewing all species.
                          choices = columnnames[3:length(columnnames)],
                          selected = columnnames[3:length(columnnames)]) #make checkbox choices to be column names from 3rd column and onward
       ),
@@ -30,7 +29,7 @@ ui <- fluidPage(
   )
 )
 server <- function(input, output) {
-  filteredwhales <- reactive({ #create reactive variable
+  filteredwhales <- reactive({ #make reactive variable
     whales %>%
     filter(Year >= input$yearInput[1],
            Year <= input$yearInput[2]) %>% #filter data by sliderInput choices
@@ -49,5 +48,4 @@ server <- function(input, output) {
     }
   )
 }
-
 shinyApp(ui = ui, server = server)
