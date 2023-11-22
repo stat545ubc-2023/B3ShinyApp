@@ -1,0 +1,12 @@
+name: B3App
+title: B3App
+username: abwang28
+account: abwang28
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 10594887
+bundleId: 7955272
+url: https://abwang28.shinyapps.io/B3App/
+version: 1
+asMultiple: FALSE
+asStatic: FALSE
