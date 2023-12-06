@@ -1,0 +1,12 @@
+name: B4ShinyApp
+title: B4ShinyApp
+username: abwang28
+account: abwang28
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 10729244
+bundleId: 8012860
+url: https://abwang28.shinyapps.io/B4ShinyApp/
+version: 1
+asMultiple: FALSE
+asStatic: FALSE
