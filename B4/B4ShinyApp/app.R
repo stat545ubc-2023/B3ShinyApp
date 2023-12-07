@@ -12,9 +12,9 @@ columnnames <- c("Entity", "Year", "Commercial Crops", "Tree Plantations Includi
 colnames(forest_loss) <- columnnames #rename column names to be more legible
 
 ui <- fluidPage(
-  theme = shinytheme("lumen"), #add lumen theme
+  theme = shinytheme("lumen"), #Feature 1: add lumen theme using shinytheme package. This is useful for improving the aesthetics of the app.
   titlePanel("Driving Factors of Brazil Legal Amazon Forest Loss", windowTitle = "Amazon Forest Loss"), #set title panel
-  h4("Characterizing the drivers of forest loss in the Brazil Legal Amazon from 2001-2013 sourced from Tyukavina et al. 2017"),
+  h4("Examining the drivers of forest loss in the Brazil Legal Amazon"),
   h5("By Alex Wang"),
   sidebarLayout(
     sidebarPanel(
@@ -25,10 +25,10 @@ ui <- fluidPage(
                          ) 
     ),
     mainPanel(
-      tabsetPanel( #create multiple tabs
+      tabsetPanel( #Feature 2: create multiple tabs. This is useful to separate the various pages of the app.
         tabPanel("Welcome!",
                  p(),
-                 img(src = "Map-of-the-Brazilian-legal-Amazon.png", height = 270, width = 320),
+                 img(src = "Map-of-the-Brazilian-legal-Amazon.png", height = 270, width = 320), # Feature 3: add image of Brazil Legal Amazon. This is useful to allow the user to see the geographic region the dataset is describing.
                  p(),
                  strong("Welcome to my shiny app! It was created to display data revealing the drivers of forest 
                  loss in the Brazil Legal Amazon (shown above) from 2001-2013 sourced from Tyukavina et al. 2017."), style = "font-size:16px",
@@ -44,13 +44,13 @@ ui <- fluidPage(
                  downloadButton("downloadForestLossTable", "Download Data")), #create download button 
         tabPanel("Amazon Forest Loss Plot", 
                  p(),
-                 plotOutput("ForestLossPlot"))
+                 plotOutput("ForestLossPlot")) #create plot
         )
       )
     )
   )
 server <- function(input, output) {
-  filtered_forest_loss <- reactive({forest_loss %>% #make reactive variable for filtered data frame
+  filtered_forest_loss <- reactive({forest_loss %>% #make reactive variable for data table output
       filter(Year >= input$yearInput[1],
              Year <= input$yearInput[2]) %>% #filter data by sliderInput choices
       select("Entity", "Year", input$driverInput) #select data by checkboxGroupInput choices
@@ -67,12 +67,12 @@ server <- function(input, output) {
   output$ForestLossTable <- DT::renderDT({ #output interactive data table with DT package
     filtered_forest_loss() 
   })
-  output$ForestLossPlot <- renderPlot({ #output histogram
+  output$ForestLossPlot <- renderPlot({ #output histogram showing forest area lost vs year, with colors representing each driver of forest loss
     pivoted_forest_loss() %>%
       ggplot(aes(x = Year, y = Area_Lost)) +
-      geom_col(aes(fill = Driver), width = 0.7) +
+      geom_col(aes(fill = Driver), width = 0.7) + 
       ylab("Area Lost") +
-      ggtitle("Drivers of Brazil Legal Amazon Forest Loss by year")
+      ggtitle("Brazil Legal Amazon Forest Loss by Year") 
   })
   output$downloadForestLossTable <- downloadHandler( #output download button
     filename = function() {
