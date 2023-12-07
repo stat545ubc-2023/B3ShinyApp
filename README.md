@@ -1,4 +1,3 @@
-# B4 App :sparkles:
 This is Alex Wang's Shiny App for Assignment B4 of STAT545. This app was made to be an interactive interface to examine the Drivers of Forest Loss in Brazil Legal Amazon (Tyukavina et al. 2017) dataset, available in the OWID Dataset Collection Github repository (https://github.com/owid/owid-datasets/tree/master/datasets). The map depicting the Brazil Legal Amazon is from Müller-Hansen et al. 2017 (https://doi.org/10.5194/npg-24-113-2017). 
 \
 \
